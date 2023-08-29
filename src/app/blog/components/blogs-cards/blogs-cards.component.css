@@ -1,0 +1,22 @@
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+mat-form-field {
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+  width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+mat-card {
+  margin: 10px 10px 10px 10px;
+}
+mat-paginator {
+  bottom: 0px;
+}

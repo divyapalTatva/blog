@@ -1,0 +1,71 @@
+<!-- <div fxLayout="column" fsFlexFill>
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>Search Books</mat-label>
+    <input matInput #searchField />
+    <button mat-icon-button matSuffix>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  <div
+    style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
+    "
+  >
+    <mat-card *ngFor="let card of obs | async" class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ card.title }}</mat-card-title>
+        <mat-card-subtitle *ngFor="let data of card.tags">{{
+          data
+        }}</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu"
+      />
+      <mat-card-content>
+        <p>
+          {{ card.body }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
+</div> -->
+<mat-form-field appearance="outline" color="accent">
+  <mat-label>Search Books</mat-label>
+  <input matInput #searchField />
+  <button mat-icon-button matSuffix>
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+<div class="page-wrapper">
+  <div fxLayout="row wrap" class="align">
+    <mat-card *ngFor="let post of obs | async" style="margin-top: 10px">
+      <mat-card-header>
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle>{{ post.title }}</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        matCardImage
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        class="card-image"
+      />
+      <mat-card-content [innerHTML]="post.title"></mat-card-content>
+      <mat-card-actions>
+        <a mat-button color="primary" [href]="post.title">Czytaj więcej</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<div>
+  <mat-paginator [pageSizeOptions]="[1, 10, 25, 100]"> </mat-paginator>
+</div>

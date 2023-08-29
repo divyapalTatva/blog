@@ -1,0 +1,35 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+}
+.box .row.content {
+  flex: 1 1 auto;
+}
+.box .row.footer {
+  flex: 0 1 40px;
+}
+mat-sidenav {
+  width: 280px;
+}
+mat-sidenav-content {
+  background-image: url("../../assets/martin-martz-W0EaIFjAck4-unsplash.jpg");
+  background-size: cover; /* Adjust as needed */
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
