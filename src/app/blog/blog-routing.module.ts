@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlogComponent } from './blog.component';
 
 import { BlogsCardsComponent } from './components/blogs-cards/blogs-cards.component';
+import { AddEditBlogComponent } from './components/add-edit-blog/add-edit-blog.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: '',
         component: BlogsCardsComponent,
+      },
+      {
+        path: 'BlogForm/:action',
+        component: AddEditBlogComponent,
       },
     ],
   },
