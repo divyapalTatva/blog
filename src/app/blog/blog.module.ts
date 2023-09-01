@@ -10,9 +10,22 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { BlogsCardsComponent } from './components/blogs-cards/blogs-cards.component';
 import { AddEditBlogComponent } from './components/add-edit-blog/add-edit-blog.component';
-
+import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
-  declarations: [BlogComponent, FooterComponent, BlogsCardsComponent, AddEditBlogComponent],
-  imports: [CommonModule, BlogRoutingModule, MaterialModule, FlexLayoutModule],
+  declarations: [
+    BlogComponent,
+    FooterComponent,
+    BlogsCardsComponent,
+    AddEditBlogComponent,
+    BlogDetailComponent,
+  ],
+  imports: [
+    CommonModule,
+    BlogRoutingModule,
+    MaterialModule,
+    FlexLayoutModule,
+    CKEditorModule,
+  ],
 })
 export class BlogModule {}

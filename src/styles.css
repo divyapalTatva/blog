@@ -3,6 +3,7 @@
 html,
 body {
   height: 100vh;
+  overflow-x: hidden;
   --mat-toolbar-title-text-size: auto;
 }
 body {
@@ -12,3 +13,11 @@ body {
 * {
   box-sizing: border-box;
 }
+/* .ck-editor__editable_inline {
+  min-height: 300px !important;
+  border-radius: 20px !important;
+}
+.ck-toolbar_grouping {
+  border-radius: 20px !important;
+  margin-bottom: 2% !important;
+} */

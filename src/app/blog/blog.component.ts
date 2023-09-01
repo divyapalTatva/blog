@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class BlogComponent {
   navLinks: any[] = [
-    { title: 'add blogs', link: 'BlogForm/add' },
+    { title: 'All Blogs', link: '' },
     { title: 'view profile', link: '' },
   ];
 }

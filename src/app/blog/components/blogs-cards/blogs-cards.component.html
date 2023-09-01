@@ -3,7 +3,7 @@
 <div fxLayout="row" fxLayoutAlign="space-between  " class="padding-5">
   <!-- search input  -->
   <mat-form-field appearance="outline" color="accent">
-    <mat-label>Search Books</mat-label>
+    <mat-label>Search Blogs</mat-label>
     <input matInput #searchField (keyup)="search(searchField.value)" />
     <button mat-icon-button matSuffix>
       <mat-icon>search</mat-icon>
@@ -58,8 +58,12 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="accent">
-            View Blog {{ card.id }}
+          <button
+            mat-raised-button
+            color="accent"
+            routerLink="BlogDetail/{{ card.id }}"
+          >
+            View Blog
           </button>
         </mat-card-actions>
       </mat-card>
@@ -69,6 +73,6 @@
 </div>
 
 <!-- pagination -->
-<div>
+<div *ngIf="dataSource.filteredData.length != 0">
   <mat-paginator [pageSizeOptions]="[6, 12, 18, 96]"> </mat-paginator>
 </div>

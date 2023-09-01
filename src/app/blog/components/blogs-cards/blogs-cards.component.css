@@ -1,3 +1,4 @@
+/* search-form-field */
 mat-form-field {
   width: 500px;
 }
@@ -6,6 +7,18 @@ mat-form-field {
   padding-right: 5%;
   padding-top: 2%;
 }
+
+/* mat-card-division */
+.content {
+  padding: 16px;
+  /* min-height: 75vh; */
+}
+.margin-bottom {
+  margin-bottom: 50%;
+}
+
+/* mat-card */
+
 mat-card {
   border-radius: 20px;
   /* box-shadow: 0 4px 8px 0 rgba(253, 235, 235, 0.418),
@@ -13,12 +26,6 @@ mat-card {
   box-shadow: 3px 3px 5px white;
 }
 
-.content {
-  padding: 16px;
-}
-.margin-bottom {
-  margin-bottom: 50%;
-}
 mat-card-content > p {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -47,4 +54,8 @@ mat-card-subtitle {
 mat-card > img {
   min-height: 300px;
   max-height: 300px;
+}
+
+mat-card-actions > button {
+  border-radius: 35px;
 }

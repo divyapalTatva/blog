@@ -19,7 +19,7 @@ export class BlogCardService implements OnInit {
       id: 2,
       title: 'He was an expert but not in a discipline',
       description:
-        'He was an expert but not in a discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice-cream fell into it at the precise angle to form a perfect cone each and every time. It had taken years to perfect and he could now do it without even putting any thought behind it.',
+        'He was an expert but not in a discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice  discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice just right so that the soft server ice-cream fell into it at the precise angle to form a perfect cone each and every time. It had taken years to perfect and he could now do it without even putting any thought behind it,He was an expert but not in a discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice-cream fell into it at the precise angle to form a perfect cone each and every time. It had taken years to perfect and he could now do it without even putting any thought behind it.',
       imgSource:
         '../../../../assets/susan-g-komen-3-day-icahJs5jFXs-unsplash.jpg',
       tags: ['french', 'fiction', 'english'],
@@ -86,5 +86,16 @@ export class BlogCardService implements OnInit {
   getCardData(): any {
     const Data = localStorage.getItem('Blogs');
     return JSON.parse(Data!);
+  }
+
+  //get blog data from its id
+  getBlogDataById(id: number) {
+    const AllBlogs = localStorage.getItem('Blogs');
+    const blogObj = JSON.parse(AllBlogs!);
+
+    let blogData = blogObj.filter((item: any) => {
+      return item.id == id;
+    });
+    return blogData;
   }
 }

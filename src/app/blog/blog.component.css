@@ -3,8 +3,6 @@ body {
   height: 100%;
   margin: 0;
 }
-
-/* mat-sidenav */
 .box {
   display: flex;
   flex-flow: column;
@@ -30,7 +28,9 @@ mat-sidenav-content {
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(5px);
+  /* justify-content: space-around; */
 }
+
 mat-sidenav-container {
   height: 100%;
 }

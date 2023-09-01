@@ -47,12 +47,13 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
 
     this.searchInputValue
       .pipe(
-        debounceTime(3000) // Adjust the debounce time as needed
+        debounceTime(1000) // Adjust the debounce time as needed
       )
       .subscribe((value) => {
         this.dataSource.filter = value.trim().toLowerCase();
       });
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.changeDetector.detectChanges();

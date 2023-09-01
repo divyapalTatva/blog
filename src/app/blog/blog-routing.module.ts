@@ -4,6 +4,7 @@ import { BlogComponent } from './blog.component';
 
 import { BlogsCardsComponent } from './components/blogs-cards/blogs-cards.component';
 import { AddEditBlogComponent } from './components/add-edit-blog/add-edit-blog.component';
+import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'BlogForm/:action',
         component: AddEditBlogComponent,
+      },
+      {
+        path: 'BlogDetail/:id',
+        component: BlogDetailComponent,
       },
     ],
   },
