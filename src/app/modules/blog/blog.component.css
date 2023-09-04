@@ -22,7 +22,7 @@ mat-sidenav {
   width: 280px;
 }
 mat-sidenav-content {
-  background-image: url("../../assets/martin-martz-W0EaIFjAck4-unsplash.jpg");
+  background-image: url("/assets/martin-martz-W0EaIFjAck4-unsplash.jpg");
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat;
   display: flex;

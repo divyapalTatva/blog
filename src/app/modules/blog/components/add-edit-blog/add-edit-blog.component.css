@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form {
+    @apply grid grid-cols-12 gap-5 lg:p-20 md:p-20 sm:p-10 p-5;
+  }
+  mat-form-field {
+    width: 100%;
+    @apply mt-1;
+  }
+
+  mat-card {
+    height: 100%;
+  }
+  mat-hint {
+    @apply text-gray-300;
+  }
+  .action-button {
+    @apply flex flex-row justify-start mt-3 gap-2;
+  }
+}
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 300px !important;
+  max-height: 300px !important;
+}
+
+@media (max-width: 768px) {
+  .margin-ck {
+    @apply mt-5 pt-3 sm:pt-0;
+  }
+}
+
+/* image  */
+.dropzone-wrapper {
+  border: 2px dashed #91b0b3;
+  color: #92b0b3;
+  position: relative;
+  height: 150px;
+}
+
+.dropzone-desc {
+  position: absolute;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  top: 50px;
+  font-size: 16px;
+}
+
+.dropzone,
+.dropzone:focus {
+  position: absolute;
+  outline: none !important;
+  width: 100%;
+  height: 150px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.dropzone-wrapper:hover,
+.dropzone-wrapper.dragover {
+  background: #b0bec5;
+  color: black;
+}
+
+img {
+  height: 100%;
+  @apply rounded-3xl;
+}
+.cancel-button-width-height {
+  width: 25px;
+  height: 20px;
+  color: black;
+}

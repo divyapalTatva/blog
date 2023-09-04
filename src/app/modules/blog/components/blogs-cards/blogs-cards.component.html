@@ -32,7 +32,11 @@
   <!--no data found card end  -->
 
   <!-- blog card start -->
-  <div fxLayout="row wrap" fxFlexFill fxLayoutGap="16px grid">
+  <div
+    fxLayout="row wrap"
+    fxLayoutGap="16px grid"
+    style="height: auto !important"
+  >
     <div
       fxFlexFill
       fxFlex="25%"
@@ -53,9 +57,7 @@
           alt="Photo of a Shiba Inu"
         />
         <mat-card-content>
-          <p>
-            {{ card.description }}
-          </p>
+          <p [innerHtml]="card.description"></p>
         </mat-card-content>
         <mat-card-actions>
           <button

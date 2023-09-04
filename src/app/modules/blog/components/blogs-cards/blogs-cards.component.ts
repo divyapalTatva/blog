@@ -33,18 +33,16 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   cardObservableData!: Observable<any>;
   searchControl = new FormControl();
-
   private searchInputValue = new Subject<string>();
-
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
     this.blogService.getCardData()
   );
 
   ngOnInit(): void {
     this.blogService.getCardData();
-    this.blogService.ngOnInit();
     this.cardObservableData = this.dataSource.connect();
 
+    // debounce funtion use for searching after some time
     this.searchInputValue
       .pipe(
         debounceTime(1000) // Adjust the debounce time as needed
@@ -52,6 +50,7 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
       .subscribe((value) => {
         this.dataSource.filter = value.trim().toLowerCase();
       });
+    console.log('cardsssssssssss');
   }
 
   ngAfterViewInit(): void {
@@ -59,6 +58,7 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
     this.changeDetector.detectChanges();
   }
 
+  //function for searching
   search(value: string) {
     this.searchInputValue.next(value);
   }
