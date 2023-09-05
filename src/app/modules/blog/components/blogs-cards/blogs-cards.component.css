@@ -52,10 +52,13 @@ mat-card-subtitle {
   -webkit-box-orient: vertical;
 }
 mat-card > img {
-  min-height: 300px;
-  max-height: 300px;
+  min-height: 500px;
+  max-height: 500px;
 }
-
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
 mat-card-actions > button {
   border-radius: 35px;
 }

@@ -25,11 +25,6 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./blogs-cards.component.css'],
 })
 export class BlogsCardsComponent implements OnInit, AfterViewInit {
-  constructor(
-    private changeDetector: ChangeDetectorRef,
-    private blogService: BlogCardService
-  ) {}
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   cardObservableData!: Observable<any>;
   searchControl = new FormControl();
@@ -37,10 +32,17 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
     this.blogService.getCardData()
   );
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private blogService: BlogCardService
+  ) {}
 
   ngOnInit(): void {
-    this.blogService.getCardData();
+    var abc = this.blogService.getCardData();
+    console.log(abc);
+
     this.cardObservableData = this.dataSource.connect();
+    console.log(this.cardObservableData);
 
     // debounce function use for searching after some time
     this.searchInputValue
@@ -61,5 +63,19 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   //function for searching
   search(value: string) {
     this.searchInputValue.next(value);
+  }
+
+  // delete blog data from its id
+  deleteBlog(id: number) {
+    // console.log(id);
+
+    let deletedOrNot = this.blogService.deleteBlog(id);
+    if (deletedOrNot) {
+      this.dataSource = new MatTableDataSource<any>(
+        this.blogService.getCardData()
+      );
+      this.cardObservableData = this.dataSource.connect();
+    } else {
+    }
   }
 }

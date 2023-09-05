@@ -20,6 +20,9 @@
   .action-button {
     @apply flex flex-row justify-start mt-3 gap-2;
   }
+  mat-card-header {
+    @apply flex flex-col justify-center items-center;
+  }
 }
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 300px !important;
@@ -38,6 +41,8 @@
   color: #92b0b3;
   position: relative;
   height: 150px;
+  border-radius: 30px;
+  margin-top: 5px;
 }
 
 .dropzone-desc {
@@ -61,8 +66,11 @@
 
 .dropzone-wrapper:hover,
 .dropzone-wrapper.dragover {
+  box-shadow: 3px 3px 5px rgba(211, 204, 204, 0.89);
   background: #b0bec5;
   color: black;
+  transition: 300ms ease-in;
+  transform: scale(1.01, 1.01);
 }
 
 img {

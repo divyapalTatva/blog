@@ -1,6 +1,9 @@
 <div class="form">
   <div class="col-span-12 h-full">
     <mat-card>
+      <mat-card-header>
+        <mat-card-title>Blog Detail Form</mat-card-title>
+      </mat-card-header>
       <mat-card-content>
         <form [formGroup]="BlogForm">
           <!-- title container start -->
@@ -44,13 +47,7 @@
 
           <!-- image container start -->
           <div class="w-full lg:gap-5 mt-5 flex-direction">
-            <div>
-              <h1 class="text-lg">Image</h1>
-              <mat-hint class="text-yellow-400"
-                >(*Image is required,Ignore if already added)</mat-hint
-              >
-            </div>
-
+            <h1 class="text-lg">Image</h1>
             <div class="w-full">
               <div matRipple matRippleColor="primary" class="dropzone-wrapper">
                 <div class="dropzone-desc">
@@ -96,28 +93,29 @@
                 </div>
               </div>
             </div>
-            <mat-error
-              *ngIf="imageArrayDataExist == false && Image.hasError('required')"
-              >{{ getImageError() }}</mat-error
-            >
+            <mat-error *ngIf="imageArrayDataExist == false">{{
+              getImageError()
+            }}</mat-error>
           </div>
           <!-- image container end -->
 
           <div class="action-button">
             <button
               #submitBtn
-              [disabled]="
-                BlogForm.invalid ||
-                imageArrayDataExist == false ||
-                descriptionDataExists == false
-              "
+              [disabled]="imageArrayDataExist == false || BlogForm.invalid"
               color="primary"
               mat-raised-button
               (click)="AddUpdateBlog()"
             >
               Submit
             </button>
-            <button color="accent" mat-raised-button>Reset</button>
+            <button
+              color="accent"
+              mat-raised-button
+              (click)="BlogForm.reset(); image = []"
+            >
+              Reset
+            </button>
           </div>
         </form>
       </mat-card-content>

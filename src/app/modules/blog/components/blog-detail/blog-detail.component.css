@@ -23,7 +23,7 @@ img {
     background-color: rgba(43, 40, 40, 0.774);
     padding: 16px;
     max-height: 800px;
-    @apply col-span-12 lg:col-span-7 xl:col-span-7 md:col-span-12 sm:col-span-12 rounded-3xl;
+    @apply col-span-12 lg:col-span-7 xl:col-span-7 md:col-span-12 sm:col-span-12 rounded-3xl flex justify-center;
   }
   .right-div {
     @apply col-span-12 xl:col-span-5 lg:col-span-5 md:col-span-12 sm:col-span-12;

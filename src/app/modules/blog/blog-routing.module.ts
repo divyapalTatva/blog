@@ -20,6 +20,10 @@ const routes: Routes = [
         component: AddEditBlogComponent,
       },
       {
+        path: 'BlogForm/:action/:id',
+        component: AddEditBlogComponent,
+      },
+      {
         path: 'BlogDetail/:id',
         component: BlogDetailComponent,
       },

@@ -8,12 +8,13 @@ import { BlogCardService } from '../../Service/blog-card.service';
   styleUrls: ['./blog-detail.component.css'],
 })
 export class BlogDetailComponent implements OnInit {
+  blogId!: number;
+  blogData: any;
   constructor(
     private router: ActivatedRoute,
     private blogService: BlogCardService
   ) {}
-  blogId!: number;
-  blogData: any;
+
   ngOnInit(): void {
     this.router.params.subscribe((res) => {
       this.blogId = +res['id'];
