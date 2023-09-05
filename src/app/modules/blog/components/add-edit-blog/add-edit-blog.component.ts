@@ -40,11 +40,11 @@ export class AddEditBlogComponent implements OnInit {
       title: ['', [Validators.required, Validators.maxLength(100)]],
       tags: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      image: [''],
+      image: ['', [Validators.required]],
     });
   }
 
-  // ckeditro configuration on ready function
+  // ckeditor configuration on ready function
   onReady(editor: ClassicEditor): void {
     const element = editor.ui.getEditableElement()!;
     const parent = element.parentElement!;
@@ -84,12 +84,15 @@ export class AddEditBlogComponent implements OnInit {
     this.image.splice(index);
     if (this.image.length > 0) {
       this.imageArrayDataExist = true;
+    } else {
+      this.imageArrayDataExist = false;
     }
+    this.BlogForm.patchValue({ image: '' });
   }
 
   //function for add update new blog
   AddUpdateBlog() {
-    if (this.image.length > 0) {
+    if (this.Image.value != '') {
       this.imageArrayDataExist = true;
     } else {
       this.imageArrayDataExist = false;
@@ -130,9 +133,12 @@ export class AddEditBlogComponent implements OnInit {
     return '';
   }
   getImageError() {
-    if (!this.imageArrayDataExist)
+    if (this.Image.hasError('required'))
       return BlogDataValidationMessage.imageRequired;
     return '';
+    // if (!this.imageArrayDataExist)
+    //   return BlogDataValidationMessage.imageRequired;
+    // return '';
   }
 
   // getter method of input fields
@@ -144,5 +150,8 @@ export class AddEditBlogComponent implements OnInit {
   }
   get Description(): FormControl {
     return this.BlogForm.get('description') as FormControl;
+  }
+  get Image(): FormControl {
+    return this.BlogForm.get('image') as FormControl;
   }
 }

@@ -13,7 +13,7 @@ export class BlogComponent implements OnInit {
   ];
   constructor(private blogService: BlogCardService) {}
   ngOnInit(): void {
-    console.log('main compo');
+    // console.log('main compo');
     this.blogService.setCardData();
   }
 }

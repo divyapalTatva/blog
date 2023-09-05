@@ -8,6 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'blog-app';
   ngOnInit(): void {
-    console.log('app compo');
+    // console.log('app compo');
   }
 }

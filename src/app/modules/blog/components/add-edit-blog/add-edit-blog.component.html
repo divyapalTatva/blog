@@ -98,9 +98,10 @@
                 </div>
               </div>
             </div>
-            <mat-error *ngIf="imageArrayDataExist == false">{{
-              getImageError()
-            }}</mat-error>
+            <mat-error
+              *ngIf="imageArrayDataExist == false && Image.hasError('required')"
+              >{{ getImageError() }}</mat-error
+            >
           </div>
           <!-- image container end -->
 

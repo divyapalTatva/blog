@@ -42,7 +42,7 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
     this.blogService.getCardData();
     this.cardObservableData = this.dataSource.connect();
 
-    // debounce funtion use for searching after some time
+    // debounce function use for searching after some time
     this.searchInputValue
       .pipe(
         debounceTime(1000) // Adjust the debounce time as needed
@@ -50,7 +50,7 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
       .subscribe((value) => {
         this.dataSource.filter = value.trim().toLowerCase();
       });
-    console.log('cardsssssssssss');
+    // console.log('cards');
   }
 
   ngAfterViewInit(): void {
