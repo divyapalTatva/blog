@@ -25,6 +25,7 @@
     "@ckeditor/ckeditor5-build-classic": "^39.0.1",
     "@ckeditor/ckeditor5-core": "^39.0.1",
     "@ckeditor/ckeditor5-engine": "^39.0.1",
+    "@ckeditor/ckeditor5-font": "^39.0.1",
     "@ckeditor/ckeditor5-utils": "^39.0.1",
     "@ckeditor/ckeditor5-watchdog": "^39.0.1",
     "rxjs": "~7.8.0",

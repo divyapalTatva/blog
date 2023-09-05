@@ -29,9 +29,7 @@
           <div class="margin-ck">
             <h1 class="text-lg">Description</h1>
             <ckeditor
-              [config]="{
-                toolbar: toolbarOptions
-              }"
+              [config]="editorConfig"
               formControlName="description"
               [editor]="Editor"
               style="color: black"

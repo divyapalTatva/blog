@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -19,6 +19,9 @@ import { options } from 'src/shared/static/editorToolbarOptions';
 })
 export class AddEditBlogComponent implements OnInit {
   public Editor = ClassicEditor;
+  public editorConfig = {
+    toolbar: options,
+  };
   image: string[] = [];
   BlogForm!: FormGroup;
   imageArrayDataExist: boolean = true;
