@@ -76,6 +76,7 @@ import { MatTableModule } from '@angular/material/table';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    MatDialogModule,
   ],
 })
 export class MaterialModule {}

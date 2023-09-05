@@ -99,7 +99,7 @@ export class BlogCardService {
   }
 
   //add new blog
-  addNewCardData(newBlogData: any) {
+  addNewCardData(newBlogData: any): boolean {
     let ExistingData = JSON.parse(localStorage.getItem('Blogs')!); // get existing blog data from local storage
     let latestBlogId = ExistingData[ExistingData.length - 1].id + 1; // get id of last blog data and assign new id to new blog accordingly
     newBlogData.id = latestBlogId;
@@ -107,11 +107,12 @@ export class BlogCardService {
     ExistingData.push(newBlogData); //push new data object into existing array
 
     let newCardAddedData = JSON.stringify(ExistingData);
-    localStorage.setItem('Blogs', newCardAddedData); //add newBlogAdded array to local storage
+    localStorage.setItem('Blogs', newCardAddedData);
+    return true; //add newBlogAdded array to local storage
   }
 
   //edit blog data from it's id
-  editBlogData(editedBlogData: any) {
+  editBlogData(editedBlogData: any): boolean {
     //console.log(editedBlogData, 'service');
     const Data = localStorage.getItem('Blogs');
     const existingBlogData = JSON.parse(Data!);
@@ -123,12 +124,15 @@ export class BlogCardService {
     if (indexOfObjectToReplace !== -1) {
       // Replace the object with the new one
       existingBlogData[indexOfObjectToReplace] = editedBlogData;
+      let cardData = JSON.stringify(existingBlogData);
+      localStorage.setItem('Blogs', cardData);
+      return true;
     } else {
       // Handle the case where the object with id  was not found
       console.error('Object with id was not found in the array.');
+      return false;
     }
-    let cardData = JSON.stringify(existingBlogData);
-    localStorage.setItem('Blogs', cardData);
+
     // Now, existingBlogData contains the updated object with id replaced
   }
 

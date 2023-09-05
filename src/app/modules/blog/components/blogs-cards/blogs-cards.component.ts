@@ -18,6 +18,9 @@ import {
 } from 'rxjs';
 import { BlogCardService } from '../../Service/blog-card.service';
 import { FormControl } from '@angular/forms';
+import { ConfirmBoxService } from '../../Service/confirm-box.service';
+import { BlogStaticMessage } from 'src/shared/static/blogResponseMessage';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-blogs-cards',
@@ -34,7 +37,9 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   );
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private blogService: BlogCardService
+    private blogService: BlogCardService,
+    private confirmBox: ConfirmBoxService,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -68,14 +73,24 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   // delete blog data from its id
   deleteBlog(id: number) {
     // console.log(id);
-
-    let deletedOrNot = this.blogService.deleteBlog(id);
-    if (deletedOrNot) {
-      this.dataSource = new MatTableDataSource<any>(
-        this.blogService.getCardData()
-      );
-      this.cardObservableData = this.dataSource.connect();
-    } else {
-    }
+    this.confirmBox
+      .openConfirmDialogue(BlogStaticMessage.BlogDeleteConfirmation)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res == true) {
+          let deletedOrNot = this.blogService.deleteBlog(id);
+          if (deletedOrNot) {
+            this.dataSource = new MatTableDataSource<any>(
+              this.blogService.getCardData()
+            );
+            this.cardObservableData = this.dataSource.connect();
+            this.toaster.success(BlogStaticMessage.BlogDeleted);
+          } else {
+            this.toaster.error(BlogStaticMessage.SomethingWentWrong);
+          }
+        } else {
+          this.toaster.warning(BlogStaticMessage.NoBlogDeleted);
+        }
+      });
   }
 }

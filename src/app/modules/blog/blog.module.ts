@@ -10,6 +10,9 @@ import { BlogsCardsComponent } from './components/blogs-cards/blogs-cards.compon
 import { AddEditBlogComponent } from './components/add-edit-blog/add-edit-blog.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ToastrModule } from 'ngx-toastr';
+import { ConfirmBoxComponent } from './sharedComponent/confirm-box/confirm-box.component';
+import { ConfirmBoxService } from './Service/confirm-box.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     BlogsCardsComponent,
     AddEditBlogComponent,
     BlogDetailComponent,
+    ConfirmBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -28,5 +32,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ReactiveFormsModule,
     FormsModule,
   ],
+  providers: [ConfirmBoxService],
 })
 export class BlogModule {}

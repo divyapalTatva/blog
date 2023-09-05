@@ -16,6 +16,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BlogDataValidationMessage } from 'src/shared/static/staticMessages';
 import { BlogCardService } from '../../Service/blog-card.service';
 import { options } from 'src/shared/static/editorToolbarOptions';
+import { ToastrService } from 'ngx-toastr';
+import { BlogStaticMessage } from 'src/shared/static/blogResponseMessage';
 
 @Component({
   selector: 'app-add-edit-blog',
@@ -40,7 +42,8 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private blogService: BlogCardService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -154,7 +157,10 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           imgSource: this.image[0],
           tags: this.Tags.value,
         };
-        this.blogService.editBlogData(data);
+        const dataUpdated = this.blogService.editBlogData(data);
+        if (dataUpdated) {
+          this.toaster.success(BlogStaticMessage.BlogUpdated);
+        }
       } else {
         const data = {
           id: 0,
@@ -163,7 +169,10 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           imgSource: this.image[0],
           tags: this.Tags.value,
         };
-        this.blogService.addNewCardData(data);
+        const blogAdded = this.blogService.addNewCardData(data);
+        if (blogAdded) {
+          this.toaster.success(BlogStaticMessage.BlogAdded);
+        }
       }
 
       this.router.navigate(['']);
