@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BlogDataValidationMessage } from 'src/shared/static/staticMessages';
 import { BlogCardService } from '../../Service/blog-card.service';
+import { options } from 'src/shared/static/editorToolbarOptions';
 
 @Component({
   selector: 'app-add-edit-blog',
@@ -23,7 +24,7 @@ export class AddEditBlogComponent implements OnInit {
   imageArrayDataExist: boolean = true;
   descriptionDataExists: boolean = true;
   editorContent: string = '';
-
+  toolbarOptions: any = options;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
