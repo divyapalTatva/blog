@@ -38,11 +38,11 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    var abc = this.blogService.getCardData();
-    console.log(abc);
+    this.blogService.getCardData();
+    // console.log(abc);
 
     this.cardObservableData = this.dataSource.connect();
-    console.log(this.cardObservableData);
+    //console.log(this.cardObservableData);
 
     // debounce function use for searching after some time
     this.searchInputValue
