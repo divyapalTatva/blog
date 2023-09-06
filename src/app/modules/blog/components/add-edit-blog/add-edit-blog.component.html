@@ -96,6 +96,10 @@
             <mat-error *ngIf="imageArrayDataExist == false">{{
               getImageError()
             }}</mat-error>
+            <mat-hint
+              >file size must be less than 400kb and only(.jpeg,.jpg,.png) files
+              are allowed</mat-hint
+            >
           </div>
           <!-- image container end -->
 

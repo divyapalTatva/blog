@@ -79,6 +79,15 @@ export class BlogCardService {
   setCardData() {
     let cardData = JSON.stringify(this.cardData);
     localStorage.setItem('Blogs', cardData);
+    localStorage.setItem('isDataPresent', 'present');
+  }
+
+  isDataPresent(): boolean {
+    if (localStorage.getItem('isDataPresent') == 'present') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   //get card data from local storage

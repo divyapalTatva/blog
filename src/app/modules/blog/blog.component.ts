@@ -13,6 +13,9 @@ export class BlogComponent implements OnInit {
   ];
   constructor(private blogService: BlogCardService) {}
   ngOnInit(): void {
-    this.blogService.setCardData();
+    //this.blogService.isDataPresent();
+    if (!this.blogService.isDataPresent()) {
+      this.blogService.setCardData();
+    }
   }
 }

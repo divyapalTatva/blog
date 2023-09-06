@@ -20,7 +20,7 @@ img {
     min-height: calc(100vh - 114px);
   }
   .left-div {
-    background-color: rgba(43, 40, 40, 0.774);
+    background-color: rgba(104, 97, 97, 0.548);
     padding: 16px;
     max-height: 800px;
     @apply col-span-12 lg:col-span-7 xl:col-span-7 md:col-span-12 sm:col-span-12 rounded-3xl flex justify-center;
@@ -31,10 +31,12 @@ img {
   .left-div > img {
     height: 100%;
     @apply rounded-3xl;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   }
 
   mat-card {
     @apply rounded-3xl;
+    background-color: rgba(104, 97, 97, 0.548);
   }
   .back-button {
     @apply flex justify-start ps-20;

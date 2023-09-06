@@ -101,9 +101,11 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
         if (
-          event.target.files[i].type.match('image/png|image/jpeg|image/jpg')
+          event.target.files[i].type.match('image/png|image/jpeg|image/jpg') &&
+          event.target.files[i].size <= 400000
         ) {
           var reader = new FileReader();
+          //console.log(event.target.files[i].size);
 
           reader.onload = (event: any) => {
             this.image.push(event.target.result);
@@ -116,6 +118,18 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           };
           reader.readAsDataURL(event.target.files[i]);
         } else {
+          if (
+            event.target.files[i].type.match(
+              'image/png|image/jpeg|image/jpg'
+            ) &&
+            event.target.files[i].size > 400000
+          ) {
+            this.toaster.error(
+              'please enter file size that must be less than 400kb'
+            );
+          } else {
+            this.toaster.error('please enter valid file!!');
+          }
         }
       }
     }

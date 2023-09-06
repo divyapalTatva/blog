@@ -24,6 +24,7 @@ mat-card {
   /* box-shadow: 0 4px 8px 0 rgba(253, 235, 235, 0.418),
     0 6px 20px 0 rgba(253, 235, 235, 0.418); */
   box-shadow: 3px 3px 5px rgba(107, 105, 105, 0.452);
+  background-color: rgba(104, 97, 97, 0.678);
 }
 
 mat-card-content > p {

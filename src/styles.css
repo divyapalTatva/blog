@@ -2,9 +2,9 @@
 
 html,
 body {
-  height: 100vh;
+  /* height: 100vh; */
   overflow-x: hidden;
-  --mat-toolbar-title-text-size: auto;
+  /* --mat-toolbar-title-text-size: auto; */
 }
 body {
   margin: 0;
@@ -15,4 +15,8 @@ body {
 }
 ::-webkit-scrollbar {
   display: none;
+}
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  width: max-content !important;
+  height: max-content;
 }
