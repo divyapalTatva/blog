@@ -22,15 +22,17 @@ mat-sidenav {
   width: 280px;
 }
 mat-sidenav-content {
-  background-image: url("/assets/martin-martz-W0EaIFjAck4-unsplash.jpg");
-  background-size: cover; /* Adjust as needed */
+  background-color: #0a0a0a;
+  background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(5px);
-  /* justify-content: space-around; */
 }
 
 mat-sidenav-container {
   height: 100%;
+}
+mat-toolbar {
+  padding: 0% 5% 0% 5%;
 }

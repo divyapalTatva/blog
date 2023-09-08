@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogComponent } from './blog.component';
-import { MaterialModule } from 'src/shared/module/material.module';
-import { FooterComponent } from './components/footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BlogsCardsComponent } from './components/blogs-cards/blogs-cards.component';
-import { AddEditBlogComponent } from './components/add-edit-blog/add-edit-blog.component';
-import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ToastrModule } from 'ngx-toastr';
-import { ConfirmBoxComponent } from './sharedComponent/confirm-box/confirm-box.component';
-import { ConfirmBoxService } from './Service/confirm-box.service';
+import { ConfirmBoxService } from './shared/service/confirm-box/confirm-box.service';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { BlogsCardsComponent } from './pages/blogs-cards/blogs-cards.component';
+import { AddEditBlogComponent } from './pages/add-edit-blog/add-edit-blog.component';
+import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
+import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
+import { MaterialModule } from '../shared/module/material.module';
 
 @NgModule({
   declarations: [

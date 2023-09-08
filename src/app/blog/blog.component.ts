@@ -8,8 +8,8 @@ import { BlogCardService } from './Service/blog-card.service';
 })
 export class BlogComponent implements OnInit {
   navLinks: any[] = [
-    { title: 'All Blogs', link: '' },
-    { title: 'view profile', link: '' },
+    { title: 'All blogs', link: '' },
+    { title: 'View profile', link: '' },
   ];
   constructor(private blogService: BlogCardService) {}
   ngOnInit(): void {

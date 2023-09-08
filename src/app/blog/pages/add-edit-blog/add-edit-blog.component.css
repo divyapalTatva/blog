@@ -3,11 +3,18 @@
 @tailwind utilities;
 
 @layer components {
+  * {
+    color: black;
+  }
+  mat-error {
+    color: #f44336 !important;
+  }
   .form {
     @apply grid grid-cols-12 gap-5 lg:p-20 md:p-20 sm:p-10 p-5;
+    min-height: 90vh;
   }
   mat-form-field {
-    width: 100%;
+    width: 50%;
     @apply mt-1;
   }
 
@@ -15,13 +22,25 @@
     height: 100%;
   }
   mat-hint {
-    @apply text-gray-300;
+    color: #673ab7;
   }
   .action-button {
     @apply flex flex-row justify-start mt-3 gap-2;
   }
   mat-card-header {
     @apply flex flex-col justify-center items-center;
+  }
+  .form-fields {
+    @apply flex gap-3 mt-3;
+  }
+  .margin-ck {
+    @apply w-1/2;
+  }
+  .img-input-container {
+    @apply w-1/2 lg:gap-5 mt-5;
+  }
+  .new-tag-add-btn {
+    color: #673ab7;
   }
 }
 :host ::ng-deep .ck-editor__editable_inline {
@@ -32,6 +51,19 @@
 @media (max-width: 768px) {
   .margin-ck {
     @apply mt-5 pt-3 sm:pt-0;
+  }
+  mat-form-field {
+    width: 100%;
+    @apply mt-1;
+  }
+  .form-fields {
+    @apply flex flex-col gap-0;
+  }
+  .margin-ck {
+    @apply w-full;
+  }
+  .img-input-container {
+    @apply w-full;
   }
 }
 
@@ -76,6 +108,9 @@
 img {
   height: 100%;
   @apply rounded-3xl;
+}
+.image-title {
+  @apply font-semibold text-lg;
 }
 .cancel-button-width-height {
   width: 25px;

@@ -13,11 +13,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { BlogDataValidationMessage } from 'src/shared/static/staticMessages';
+
 import { BlogCardService } from '../../Service/blog-card.service';
-import { options } from 'src/shared/static/editorToolbarOptions';
+
 import { ToastrService } from 'ngx-toastr';
-import { BlogStaticMessage } from 'src/shared/static/blogResponseMessage';
+import { options } from 'src/app/blog/shared/static/editorToolbarOptions';
+import { BlogStaticMessage } from 'src/app/blog/shared/static/blogResponseMessage';
+import { BlogDataValidationMessage } from 'src/app/blog/shared/static/staticMessages';
+import { Observable } from 'rxjs';
+import { TagsDropdown } from '../../shared/static/tagsDropdown';
 
 @Component({
   selector: 'app-add-edit-blog',
@@ -37,6 +41,10 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
   toolbarOptions: any = options;
   blogData: any;
   isDataForEdit!: boolean;
+  dropdownData = TagsDropdown;
+  tagsData: string[] = [];
+
+  IMG_ACCEPTABLE_EXTENSIONS: string = 'image/png|image/jpeg|image/jpg';
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -52,23 +60,27 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.route.params.subscribe((res) => {
-      if (res['action'] == 'edit') {
+      if (res['id']) {
         this.isDataForEdit = true;
         this.blogData = this.blogService.getBlogDataById(+res['id']);
+        this.tagsData = this.blogData.tags
+          .split(',')
+          .map((element: any, index: any) => {
+            console.log(element.replace(/'/g, ''));
 
+            return element.replace(/'/g, '').trim();
+          });
         this.BlogForm.patchValue({
           title: this.blogData.title,
           description: this.blogData.description,
-          tags: this.blogData.tags,
+          tags: this.tagsData,
         });
-
         const abc = this.image.push(this.blogData.imgSource);
         if (abc === 1) {
           this.imageArrayDataExist = true;
         } else {
           this.imageArrayDataExist = false;
         }
-        //console.log(this.blogData);
       } else {
         this.isDataForEdit = false;
       }
@@ -81,6 +93,7 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     this.BlogForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(100)]],
       tags: ['', [Validators.required]],
+      tagsToBeAdd: [''],
       description: ['', [Validators.required]],
       image: [''],
     });
@@ -101,15 +114,12 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
         if (
-          event.target.files[i].type.match('image/png|image/jpeg|image/jpg') &&
+          event.target.files[i].type.match(this.IMG_ACCEPTABLE_EXTENSIONS) &&
           event.target.files[i].size <= 400000
         ) {
           var reader = new FileReader();
-          //console.log(event.target.files[i].size);
-
           reader.onload = (event: any) => {
             this.image.push(event.target.result);
-            //console.log(this.image.length);
             if (this.image.length > 0) {
               this.imageArrayDataExist = true;
             } else {
@@ -119,16 +129,12 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           reader.readAsDataURL(event.target.files[i]);
         } else {
           if (
-            event.target.files[i].type.match(
-              'image/png|image/jpeg|image/jpg'
-            ) &&
+            event.target.files[i].type.match(this.IMG_ACCEPTABLE_EXTENSIONS) &&
             event.target.files[i].size > 400000
           ) {
-            this.toaster.error(
-              'please enter file size that must be less than 400kb'
-            );
+            this.toaster.error(BlogStaticMessage.ImageFileSizeError);
           } else {
-            this.toaster.error('please enter valid file!!');
+            this.toaster.error(BlogStaticMessage.ImageValidExtensionError);
           }
         }
       }
@@ -148,6 +154,8 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
   //function for add update new blog
   AddUpdateBlog() {
+    console.log(this.BlogForm.get('tags')?.value);
+
     if (this.isDataForEdit) {
       if (this.image.length > 0) {
         this.imageArrayDataExist = true;
@@ -164,26 +172,32 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
     if (!this.BlogForm.invalid && this.imageArrayDataExist) {
       if (this.isDataForEdit) {
+        const tagsToBeAdd: string[] = this.Tags.value.map(
+          (element: any) => `'${element}'`
+        );
         const data = {
           id: this.blogData.id,
           title: this.Title.value,
           description: this.Description.value,
           imgSource: this.image[0],
-          tags: this.Tags.value,
+          tags: tagsToBeAdd.toString(),
         };
         const dataUpdated = this.blogService.editBlogData(data);
         if (dataUpdated) {
           this.toaster.success(BlogStaticMessage.BlogUpdated);
         }
       } else {
+        const tagsToBeAdd: string[] = this.Tags.value.map(
+          (element: any) => `'${element}'`
+        );
         const data = {
           id: 0,
           title: this.Title.value,
           description: this.Description.value,
           imgSource: this.image[0],
-          tags: this.Tags.value,
+          tags: tagsToBeAdd.toString(),
         };
-        const blogAdded = this.blogService.addNewCardData(data);
+        const blogAdded = this.blogService.addNewBlogData(data);
         if (blogAdded) {
           this.toaster.success(BlogStaticMessage.BlogAdded);
         }
@@ -192,8 +206,14 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
       this.router.navigate(['']);
       //console.log('DATA HERE');
     } else {
-      console.log('please fill all details');
+      this.toaster.error(BlogStaticMessage.FillAllDetailsError);
     }
+  }
+
+  addNewTag() {
+    const tagDataToBeAdd = this.BlogForm.get('tagsToBeAdd')?.value;
+    TagsDropdown.push(tagDataToBeAdd);
+    this.BlogForm.patchValue({ tagsToBeAdd: '' });
   }
 
   // functions for get error of all input fields

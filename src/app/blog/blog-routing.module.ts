@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlogComponent } from './blog.component';
-
-import { BlogsCardsComponent } from './components/blogs-cards/blogs-cards.component';
-import { AddEditBlogComponent } from './components/add-edit-blog/add-edit-blog.component';
-import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { BlogsCardsComponent } from './pages/blogs-cards/blogs-cards.component';
+import { AddEditBlogComponent } from './pages/add-edit-blog/add-edit-blog.component';
+import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
 
 const routes: Routes = [
   {
@@ -16,15 +15,15 @@ const routes: Routes = [
         component: BlogsCardsComponent,
       },
       {
-        path: 'BlogForm/:action',
+        path: 'add',
         component: AddEditBlogComponent,
       },
       {
-        path: 'BlogForm/:action/:id',
+        path: 'edit/:id',
         component: AddEditBlogComponent,
       },
       {
-        path: 'BlogDetail/:id',
+        path: 'details/:id',
         component: BlogDetailComponent,
       },
     ],

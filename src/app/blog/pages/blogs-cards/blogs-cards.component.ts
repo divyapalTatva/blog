@@ -18,9 +18,9 @@ import {
 } from 'rxjs';
 import { BlogCardService } from '../../Service/blog-card.service';
 import { FormControl } from '@angular/forms';
-import { ConfirmBoxService } from '../../Service/confirm-box.service';
-import { BlogStaticMessage } from 'src/shared/static/blogResponseMessage';
+import { ConfirmBoxService } from '../../shared/service/confirm-box/confirm-box.service';
 import { ToastrService } from 'ngx-toastr';
+import { BlogStaticMessage } from '../../shared/static/blogResponseMessage';
 
 @Component({
   selector: 'app-blogs-cards',
