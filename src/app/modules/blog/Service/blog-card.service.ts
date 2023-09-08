@@ -108,7 +108,7 @@ export class BlogCardService {
   }
 
   //add new blog
-  addNewCardData(newBlogData: any): boolean {
+  addNewBlogData(newBlogData: any): boolean {
     let ExistingData = JSON.parse(localStorage.getItem('Blogs')!); // get existing blog data from local storage
     //console.log(ExistingData);
     if (ExistingData.length == 0) {
