@@ -85,6 +85,7 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
             );
             this.cardObservableData = this.dataSource.connect();
             this.toaster.success(BlogStaticMessage.BlogDeleted);
+            this.ngAfterViewInit();
           } else {
             this.toaster.error(BlogStaticMessage.SomethingWentWrong);
           }

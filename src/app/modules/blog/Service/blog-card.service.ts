@@ -110,8 +110,14 @@ export class BlogCardService {
   //add new blog
   addNewCardData(newBlogData: any): boolean {
     let ExistingData = JSON.parse(localStorage.getItem('Blogs')!); // get existing blog data from local storage
-    let latestBlogId = ExistingData[ExistingData.length - 1].id + 1; // get id of last blog data and assign new id to new blog accordingly
-    newBlogData.id = latestBlogId;
+    //console.log(ExistingData);
+    if (ExistingData.length == 0) {
+      // get id of last blog data and assign new id to new blog accordingly
+      newBlogData.id = 1;
+    } else {
+      let latestBlogId = ExistingData[ExistingData.length - 1].id + 1; // get id of last blog data and assign new id to new blog accordingly
+      newBlogData.id = latestBlogId;
+    }
 
     ExistingData.push(newBlogData); //push new data object into existing array
 
