@@ -11,15 +11,14 @@ mat-form-field {
 .bg-color-search-add-container {
   background-color: #ffd740 !important;
   border-radius: 0px !important;
-  padding-left: 3%;
-  padding-right: 3%;
+  @apply ps-12 pe-12;
   display: flex;
   justify-content: space-between;
 }
 .bg-color-search-add-container > div > mat-form-field {
   margin-top: 22px;
 }
-.bg-color-search-add-container > mat-card-header > {
+.bg-color-search-add-container > mat-card-header {
   margin-top: 22px;
 }
 .btn-add-blog {
@@ -27,7 +26,7 @@ mat-form-field {
 }
 /* mat-card-division */
 .content {
-  padding: 3%;
+  @apply p-12;
   min-height: 75vh;
 }
 .margin-bottom {
@@ -82,6 +81,7 @@ mat-card-subtitle {
   display: -webkit-box;
   -webkit-line-clamp: 1; /* number of lines to show */
   line-clamp: 1;
+  margin: 0.5rem 0 0.5rem 0;
   -webkit-box-orient: vertical;
   color: #ffd740;
 }
@@ -98,7 +98,23 @@ mat-card-actions > button {
 }
 mat-card-content {
   min-height: 60px;
+  margin-top: 0.5rem;
 }
 .add-button {
   @apply flex flex-row items-center;
+}
+
+@media (max-width: 600px) {
+  .search-box {
+    width: calc(100vw - 40vw);
+  }
+  .bg-color-search-add-container {
+    @apply ps-4 pe-4;
+  }
+  .search-box > mat-form-field {
+    width: 100%;
+  }
+  .content {
+    @apply p-4;
+  }
 }

@@ -34,5 +34,16 @@ mat-sidenav-container {
   height: 100%;
 }
 mat-toolbar {
-  padding: 0% 5% 0% 5%;
+  @apply ps-12 pe-12;
+}
+@media (max-width: 600px) {
+  mat-toolbar {
+    @apply ps-4 pe-4;
+  }
+}
+.bg-color {
+  background-color: #302f2e;
+}
+.nav-links {
+  color: white !important;
 }

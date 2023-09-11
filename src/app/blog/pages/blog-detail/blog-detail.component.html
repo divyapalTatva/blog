@@ -1,26 +1,7 @@
-<!-- <div>
-  <mat-card>
-    <img
-      mat-card-image
-      src="{{ blogData.imgSource }}"
-      alt="Photo of a Shiba Inu"
-    />
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{ blogData.title }}</mat-card-title>
-      <mat-card-subtitle>{{ blogData.tags }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        {{ blogData.description }}
-      </p>
-    </mat-card-content>
-  </mat-card>
-</div> -->
 <!-- Component Code -->
 <div class="back-button">
   <button
-    class="p-3 rounded-2xl mt-5"
+    class="p-3 rounded-2xl mt-3"
     color="accent"
     mat-raised-button
     routerLink="/"
@@ -38,8 +19,10 @@
         <mat-card class="mat-elevation-z8">
           <mat-card-content>
             <mat-card-title
-              ><span class="text-pink-600">Title: </span
-              >{{ blogData.title }}</mat-card-title
+              ><span class="cards-title">Title: </span
+              ><span class="list-content">{{
+                blogData.title
+              }}</span></mat-card-title
             >
           </mat-card-content>
         </mat-card>
@@ -48,12 +31,14 @@
         <mat-card class="mat-elevation-z8">
           <mat-card-content>
             <mat-card-title
-              ><span class="text-pink-600">Tags: </span></mat-card-title
+              ><span class="cards-title">Tags: </span></mat-card-title
             >
             <mat-list *ngFor="let item of blogData.tags.split(','); index as i">
               <mat-list-item
-                ><span class="text-pink-600 text-lg pe-4">{{ i }}.</span
-                >{{ item.replaceAll("'", "") | titlecase }}</mat-list-item
+                ><span class="list-index">{{ i }}.</span
+                ><span class="list-content">{{
+                  item.replaceAll("'", "") | titlecase
+                }}</span></mat-list-item
               >
               <mat-divider></mat-divider>
             </mat-list>
@@ -64,9 +49,9 @@
         <mat-card class="mat-elevation-z8">
           <mat-card-content>
             <mat-card-title
-              ><span class="text-pink-600">Description: </span></mat-card-title
+              ><span class="cards-title">Description: </span></mat-card-title
             >
-            <mat-card-header class="text-lg">
+            <mat-card-header class="text-lg text-white">
               <span [innerHtml]="blogData.description"> </span>
             </mat-card-header>
           </mat-card-content>

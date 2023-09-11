@@ -29,7 +29,7 @@
   <div class="row content">
     <mat-sidenav-container class="example-container">
       <mat-sidenav
-        color="primary"
+        class="bg-color"
         #sidenav
         fxLayout="column"
         mode="over"
@@ -38,6 +38,7 @@
       >
         <div fxLayout="column">
           <a
+            class="nav-links"
             *ngFor="let link of navLinks"
             mat-button
             routerLink="{{ link.link }}"

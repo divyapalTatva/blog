@@ -1,8 +1,8 @@
 <!-- search bar and add blog button  -->
 
 <div class="bg-color-search-add-container">
-  <div>
-    <mat-form-field appearance="outline" color="accent">
+  <div class="search-box">
+    <mat-form-field appearance="outline" color="primary">
       <mat-label>Search Blogs</mat-label>
       <input matInput #searchField (keyup)="search(searchField.value)" />
       <button mat-icon-button matSuffix>
@@ -27,6 +27,7 @@
       mat-mini-fab
       color="primary"
       routerLink="add"
+      class="Add-blog-btn-icon"
     >
       <mat-icon color="accent">add</mat-icon>
     </button>
@@ -60,6 +61,7 @@
       fxFlex.xs="100%"
       fxFlex.sm="50%"
       fxFlex.md="33%"
+      fxFlex.lt-md="50%"
       fxFlex.lg="25%"
       *ngFor="let card of cardObservableData | async"
     >
