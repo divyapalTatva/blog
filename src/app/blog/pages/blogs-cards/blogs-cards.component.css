@@ -107,7 +107,7 @@ mat-card-content {
 
 @media (max-width: 600px) {
   .search-box {
-    width: calc(100vw - 40vw);
+    width: calc(100vw - 20vw);
   }
   .bg-color-search-add-container {
     @apply ps-4 pe-4;

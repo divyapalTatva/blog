@@ -16,7 +16,7 @@ img {
 
 @layer components {
   .blog-list-container {
-    @apply grid sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-5 p-5;
+    @apply grid sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-5 ps-12 pe-12 pt-3 pb-3;
     min-height: calc(100vh - 114px);
   }
   .left-div {
@@ -44,7 +44,7 @@ img {
       rgba(255, 255, 255, 0.479) 0px 0px 0px 1px inset;
   }
   .back-button {
-    @apply flex justify-start p-5;
+    @apply flex justify-start ps-12;
   }
   .list-content {
     @apply text-white;
@@ -57,11 +57,11 @@ img {
   color: #ffd740;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 650px) {
   .back-button {
-    @apply p-5;
+    @apply ps-5;
   }
   .blog-list-container {
-    @apply p-5;
+    @apply ps-5 pe-5;
   }
 }
