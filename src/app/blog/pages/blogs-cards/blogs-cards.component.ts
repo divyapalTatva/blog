@@ -16,11 +16,12 @@ import {
   debounceTime,
   takeUntil,
 } from 'rxjs';
-import { BlogCardService } from '../../Service/blog-card.service';
+import { BlogCardService } from '../../service/blog-local/blog-card.service';
 import { FormControl } from '@angular/forms';
 import { ConfirmBoxService } from '../../shared/service/confirm-box/confirm-box.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlogStaticMessage } from '../../shared/static/blogResponseMessage';
+import { BlogRxjsService } from '../../service/blog-rxjs/blog-rxjs.service';
 
 @Component({
   selector: 'app-blogs-cards',
@@ -32,19 +33,28 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   cardObservableData!: Observable<any>;
   searchControl = new FormControl();
   private searchInputValue = new Subject<string>();
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
-    this.blogService.getCardData()
-  );
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private blogService: BlogCardService,
     private confirmBox: ConfirmBoxService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private blogRxjs: BlogRxjsService
   ) {}
-
+  blogData: any;
+  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
+  //   this.blogService.getCardData()
+  // );
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   ngOnInit(): void {
-    this.blogService.getCardData();
+    // this.blogService.getCardData();
     // console.log(abc);
+
+    this.blogRxjs.blogData.subscribe((res) => {
+      this.blogData = res;
+    });
+    console.log('Observable blog Cards', this.blogData);
+    this.dataSource = new MatTableDataSource<any>(this.blogData);
 
     this.cardObservableData = this.dataSource.connect();
     //console.log(this.cardObservableData);
@@ -52,7 +62,7 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
     // debounce function use for searching after some time
     this.searchInputValue
       .pipe(
-        debounceTime(1000) // Adjust the debounce time as needed
+        debounceTime(200) // Adjust the debounce time as needed
       )
       .subscribe((value) => {
         this.dataSource.filter = value.trim().toLowerCase();
@@ -78,11 +88,14 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((res) => {
         if (res == true) {
-          let deletedOrNot = this.blogService.deleteBlog(id);
+          // let deletedOrNot = this.blogService.deleteBlog(id);
+          let deletedOrNot = this.blogRxjs.deleteBlog(id);
           if (deletedOrNot) {
-            this.dataSource = new MatTableDataSource<any>(
-              this.blogService.getCardData()
-            );
+            // this.dataSource = new MatTableDataSource<any>(
+            //   this.blogService.getCardData()
+            // );
+            this.dataSource = new MatTableDataSource<any>(this.blogData);
+
             this.cardObservableData = this.dataSource.connect();
             this.toaster.success(BlogStaticMessage.BlogDeleted);
             this.ngAfterViewInit();

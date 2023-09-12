@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { BlogInitialData } from '../shared/static/initialData';
+import { BlogInitialData } from '../../shared/static/initialData';
 
 @Injectable({
   providedIn: 'root',

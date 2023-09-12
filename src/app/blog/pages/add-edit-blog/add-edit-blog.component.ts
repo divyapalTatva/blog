@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import { BlogCardService } from '../../Service/blog-card.service';
+import { BlogCardService } from '../../service/blog-local/blog-card.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { options } from 'src/app/blog/shared/static/editorToolbarOptions';
@@ -22,6 +22,7 @@ import { BlogStaticMessage } from 'src/app/blog/shared/static/blogResponseMessag
 import { BlogDataValidationMessage } from 'src/app/blog/shared/static/staticMessages';
 import { Observable } from 'rxjs';
 import { TagsDropdown } from '../../shared/static/tagsDropdown';
+import { BlogRxjsService } from '../../service/blog-rxjs/blog-rxjs.service';
 
 @Component({
   selector: 'app-add-edit-blog',
@@ -51,7 +52,8 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     private router: Router,
     private blogService: BlogCardService,
     private changeDetector: ChangeDetectorRef,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private blogRxjs: BlogRxjsService
   ) {}
 
   ngOnInit(): void {
@@ -62,12 +64,12 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe((res) => {
       if (res['id']) {
         this.isDataForEdit = true;
-        this.blogData = this.blogService.getBlogDataById(+res['id']);
-        this.tagsData = this.blogData.tags
+        this.blogData = this.blogRxjs.getBlogDataById(+res['id']);
+        console.log(this.blogData);
+
+        this.tagsData = this.blogData['tags']
           .split(',')
           .map((element: any, index: any) => {
-            console.log(element.replace(/'/g, ''));
-
             return element.replace(/'/g, '').trim();
           });
         this.BlogForm.patchValue({
@@ -182,7 +184,8 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           imgSource: this.image[0],
           tags: tagsToBeAdd.toString(),
         };
-        const dataUpdated = this.blogService.editBlogData(data);
+        // const dataUpdated = this.blogService.editBlogData(data);
+        const dataUpdated = this.blogRxjs.editBlogData(data);
         if (dataUpdated) {
           this.toaster.success(BlogStaticMessage.BlogUpdated);
         }
@@ -197,7 +200,8 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           imgSource: this.image[0],
           tags: tagsToBeAdd.toString(),
         };
-        const blogAdded = this.blogService.addNewBlogData(data);
+        const blogAdded = this.blogRxjs.addNewBlogData(data);
+        // const blogAdded = this.blogService.addNewBlogData(data);
         if (blogAdded) {
           this.toaster.success(BlogStaticMessage.BlogAdded);
         }

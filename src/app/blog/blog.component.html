@@ -19,6 +19,7 @@
       <div fxShow="true" fxHide.lt-md="true">
         <a
           *ngFor="let link of navLinks"
+          [hidden]="hideNavLink && link.link == '/'"
           mat-button
           routerLink="{{ link.link }}"
           >{{ link.title }}</a
@@ -40,6 +41,7 @@
           <a
             class="nav-links"
             *ngFor="let link of navLinks"
+            [hidden]="hideNavLink && link.link == '/'"
             mat-button
             routerLink="{{ link.link }}"
             >{{ link.title }}</a

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BlogCardService } from '../../Service/blog-card.service';
+import { BlogCardService } from '../../service/blog-local/blog-card.service';
+import { BlogRxjsService } from '../../service/blog-rxjs/blog-rxjs.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -12,13 +13,15 @@ export class BlogDetailComponent implements OnInit {
   blogData: any;
   constructor(
     private router: ActivatedRoute,
-    private blogService: BlogCardService
+    private blogService: BlogCardService,
+    private blogRxjs: BlogRxjsService
   ) {}
 
   ngOnInit(): void {
     this.router.params.subscribe((res) => {
       this.blogId = +res['id'];
     });
-    this.blogData = this.blogService.getBlogDataById(this.blogId);
+    // this.blogData = this.blogService.getBlogDataById(this.blogId);
+    this.blogData = this.blogRxjs.getBlogDataById(this.blogId);
   }
 }
