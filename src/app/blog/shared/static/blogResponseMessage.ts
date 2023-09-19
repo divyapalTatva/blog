@@ -9,4 +9,5 @@ export const BlogStaticMessage = {
   ImageFileSizeError: 'please enter file size that must be less than 400kb',
   ImageValidExtensionError: 'please enter valid file!!',
   FillAllDetailsError: 'please enter all the necessary details',
+  PleaseEnterCredentials: 'please enter your credentials',
 };

@@ -164,7 +164,7 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
     if (this.authService.getToken() == null) {
       this.confirmBox
-        .openAuthDialogue(BlogStaticMessage.BlogDeleteConfirmation)
+        .openAuthDialogue(BlogStaticMessage.PleaseEnterCredentials)
         .afterClosed()
         .subscribe((res) => {
           if (res) {

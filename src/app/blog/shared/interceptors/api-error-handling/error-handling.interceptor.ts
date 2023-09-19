@@ -6,16 +6,18 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, filter, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { BlogStaticMessage } from '../../static/blogResponseMessage';
 import { ConfirmBoxService } from '../../service/confirm-box/confirm-box.service';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
   constructor(
     private toaster: ToastrService,
-    private confirmBox: ConfirmBoxService
+    private confirmBox: ConfirmBoxService,
+    private router: Router
   ) {}
 
   intercept(
@@ -39,11 +41,12 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
           this.toaster.error(BlogStaticMessage.InternalServerError);
         }
         this.confirmBox
-          .openAuthDialogue(BlogStaticMessage.BlogDeleteConfirmation)
+          .openAuthDialogue(BlogStaticMessage.PleaseEnterCredentials)
           .afterClosed()
           .subscribe((res) => {
             if (res) {
               this.toaster.success('login done successfully');
+              window.location.reload();
             } else {
               this.toaster.error(BlogStaticMessage.SomethingWentWrong);
             }
