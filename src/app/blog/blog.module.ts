@@ -13,6 +13,8 @@ import { AddEditBlogComponent } from './pages/add-edit-blog/add-edit-blog.compon
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
 import { ConfirmBoxComponent } from './shared/components/confirm-box/confirm-box.component';
 import { MaterialModule } from '../shared/module/material.module';
+import { LoginPromptComponent } from './shared/components/login-prompt/login-prompt.component';
+import { AuthService } from './shared/service/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { MaterialModule } from '../shared/module/material.module';
     AddEditBlogComponent,
     BlogDetailComponent,
     ConfirmBoxComponent,
+    LoginPromptComponent,
   ],
   imports: [
     CommonModule,

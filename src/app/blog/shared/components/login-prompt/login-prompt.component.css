@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+mat-card {
+  @apply rounded-xl;
+  transition: ease-in 0.5s;
+}
+
+.input-div {
+  @apply flex flex-col;
+}
+mat-form-field {
+  @apply w-full mt-3;
+}
+/* :host {
+  position: absolute;
+  z-index: 11;
+  top: 0;
+} */

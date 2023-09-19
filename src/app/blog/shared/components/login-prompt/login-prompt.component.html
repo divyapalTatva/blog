@@ -1,0 +1,42 @@
+<mat-card class="bg-white p-6 w-full">
+  <mat-card-header>
+    <div class="input-div">
+      <mat-card-title>{{ data.message }}</mat-card-title>
+      <form [formGroup]="authenticateForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            #password
+            type="text"
+            matInput
+            required
+            formControlName="password"
+          />
+          <mat-error>please enter password!!</mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <button class="absolute top-3 right-3" (click)="closeDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-actions class="flex gap-4 justify-end">
+    <button
+      class="text-black bg-green-500 text-lg"
+      mat-raised-button
+      [mat-dialog-close]="false"
+    >
+      no
+    </button>
+    <button
+      class="text-black bg-red-600 border-1 border-black text-lg"
+      mat-raised-button
+      color="warn"
+      (click)="authenticate(password.value)"
+    >
+      yes
+    </button>
+  </mat-card-actions>
+</mat-card>

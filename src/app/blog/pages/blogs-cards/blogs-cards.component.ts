@@ -22,6 +22,8 @@ import { ConfirmBoxService } from '../../shared/service/confirm-box/confirm-box.
 import { ToastrService } from 'ngx-toastr';
 import { BlogStaticMessage } from '../../shared/static/blogResponseMessage';
 import { BlogRxjsService } from '../../service/blog-rxjs/blog-rxjs.service';
+import { BlogApiService } from '../../service/blog-api/blog-api.service';
+import { AuthService } from '../../shared/service/auth/auth.service';
 
 @Component({
   selector: 'app-blogs-cards',
@@ -32,14 +34,16 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   cardObservableData!: Observable<any>;
   searchControl = new FormControl();
+  dataReceived = new Subject<boolean>();
   private searchInputValue = new Subject<string>();
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private blogService: BlogCardService,
+    private blogService: BlogApiService,
     private confirmBox: ConfirmBoxService,
     private toaster: ToastrService,
-    private blogRxjs: BlogRxjsService
+    private blogRxjs: BlogRxjsService,
+    private authService: AuthService
   ) {}
   blogData: any;
   // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
@@ -47,32 +51,49 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   // );
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   ngOnInit(): void {
-    // this.blogService.getCardData();
-    // console.log(abc);
+    // this.blogRxjs.blogData.subscribe((res) => {
+    //   this.blogData = res;
+    // });
 
-    this.blogRxjs.blogData.subscribe((res) => {
-      this.blogData = res;
-    });
+    this.getBlogData();
     console.log('Observable blog Cards', this.blogData);
-    this.dataSource = new MatTableDataSource<any>(this.blogData);
-
-    this.cardObservableData = this.dataSource.connect();
-    //console.log(this.cardObservableData);
-
     // debounce function use for searching after some time
-    this.searchInputValue
-      .pipe(
-        debounceTime(200) // Adjust the debounce time as needed
-      )
-      .subscribe((value) => {
-        this.dataSource.filter = value.trim().toLowerCase();
+    this.searchInputValue.pipe(debounceTime(500)).subscribe((value) => {
+      this.blogService.getCardData(value).subscribe((res: any) => {
+        this.blogData = res.data;
+        console.log(res);
+        this.dataSource = new MatTableDataSource<any>(res.data);
+        this.cardObservableData = this.dataSource.connect();
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.changeDetector.detectChanges();
+        }, 100);
       });
-    // console.log('cards');
+    });
+  }
+  ngAfterViewInit(): void {
+    this.dataReceived.subscribe((res) => {
+      if (res) {
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.changeDetector.detectChanges();
+        }, 100);
+      }
+    });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.changeDetector.detectChanges();
+  //get blog data
+  getBlogData() {
+    this.blogService.getCardData('').subscribe((res: any) => {
+      this.blogData = res.data;
+      console.log(res);
+      this.dataSource = new MatTableDataSource<any>(res.data);
+      this.cardObservableData = this.dataSource.connect();
+
+      if (res.statusCode == 200) {
+        this.dataReceived.next(true);
+      }
+    });
   }
 
   //function for searching
@@ -82,28 +103,44 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
 
   // delete blog data from its id
   deleteBlog(id: number) {
-    // console.log(id);
+    if (this.authService.getToken() == null) {
+      this.confirmBox
+        .openAuthDialogue(BlogStaticMessage.BlogDeleteConfirmation)
+        .afterClosed()
+        .subscribe((res) => {
+          if (res) {
+            this.delete(id);
+          } else {
+            this.toaster.error(BlogStaticMessage.SomethingWentWrong);
+          }
+        });
+    } else {
+      this.delete(id);
+    }
+  }
+
+  //ask for confirmation before deleting
+  delete(id: number) {
     this.confirmBox
       .openConfirmDialogue(BlogStaticMessage.BlogDeleteConfirmation)
       .afterClosed()
       .subscribe((res) => {
         if (res == true) {
-          // let deletedOrNot = this.blogService.deleteBlog(id);
-          let deletedOrNot = this.blogRxjs.deleteBlog(id);
-          if (deletedOrNot) {
-            // this.dataSource = new MatTableDataSource<any>(
-            //   this.blogService.getCardData()
-            // );
-            this.dataSource = new MatTableDataSource<any>(this.blogData);
-
-            this.cardObservableData = this.dataSource.connect();
-            this.toaster.success(BlogStaticMessage.BlogDeleted);
-            this.ngAfterViewInit();
-          } else {
-            this.toaster.error(BlogStaticMessage.SomethingWentWrong);
-          }
+          this.blogService.deleteBlog(id).subscribe({
+            next: (res) => {
+              if (res.statusCode == 200) {
+                this.toaster.success(res.message);
+                this.getBlogData();
+              } else {
+                this.toaster.error(res.message);
+              }
+            },
+            error: (res) => {
+              this.toaster.error(BlogStaticMessage.SomethingWentWrong);
+            },
+          });
         } else {
-          this.toaster.warning(BlogStaticMessage.NoBlogDeleted);
+          this.toaster.error(BlogStaticMessage.NoBlogDeleted);
         }
       });
   }

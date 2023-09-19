@@ -2,6 +2,8 @@ import { JsonPipe } from '@angular/common';
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BlogInitialData } from '../../shared/static/initialData';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +11,7 @@ import { BlogInitialData } from '../../shared/static/initialData';
 export class BlogCardService {
   cardData: any = BlogInitialData;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   //set card data to local storage Initially
   setCardData() {
@@ -28,7 +30,8 @@ export class BlogCardService {
   }
 
   //get card data from local storage
-  getCardData(): any {
+  getCardData(search: string): any {
+    this.http.get(`${environment.baseURL}Blog/GetAllBlogs?search=${search}`);
     const Data = localStorage.getItem('Blogs');
     return JSON.parse(Data!);
   }

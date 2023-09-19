@@ -23,6 +23,9 @@ import { BlogDataValidationMessage } from 'src/app/blog/shared/static/staticMess
 import { Observable } from 'rxjs';
 import { TagsDropdown } from '../../shared/static/tagsDropdown';
 import { BlogRxjsService } from '../../service/blog-rxjs/blog-rxjs.service';
+import { ConfirmBoxService } from '../../shared/service/confirm-box/confirm-box.service';
+import { AuthService } from '../../shared/service/auth/auth.service';
+import { BlogApiService } from '../../service/blog-api/blog-api.service';
 
 @Component({
   selector: 'app-add-edit-blog',
@@ -50,7 +53,9 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
-    private blogService: BlogCardService,
+    private blogService: BlogApiService,
+    private authService: AuthService,
+    private confirmBox: ConfirmBoxService,
     private changeDetector: ChangeDetectorRef,
     private toaster: ToastrService,
     private blogRxjs: BlogRxjsService
@@ -156,6 +161,30 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
   //function for add update new blog
   AddUpdateBlog() {
+    console.log(this.authService.getToken());
+
+    if (this.authService.getToken() == null) {
+      this.confirmBox
+        .openAuthDialogue(BlogStaticMessage.BlogDeleteConfirmation)
+        .afterClosed()
+        .subscribe((res) => {
+          if (res) {
+            this.addUpdate();
+          } else {
+            this.toaster.error(BlogStaticMessage.SomethingWentWrong);
+          }
+        });
+    } else {
+      this.addUpdate();
+    }
+
+    // this.authService.authorize('User@123').subscribe((data) => {
+    //   console.log(data);
+    // });
+    //
+  }
+
+  addUpdate() {
     console.log(this.BlogForm.get('tags')?.value);
 
     if (this.isDataForEdit) {
@@ -174,40 +203,57 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
     if (!this.BlogForm.invalid && this.imageArrayDataExist) {
       if (this.isDataForEdit) {
-        const tagsToBeAdd: string[] = this.Tags.value.map(
-          (element: any) => `'${element}'`
-        );
         const data = {
-          id: this.blogData.id,
-          title: this.Title.value,
-          description: this.Description.value,
-          imgSource: this.image[0],
-          tags: tagsToBeAdd.toString(),
+          Id: this.blogData.id,
+          Title: this.Title.value,
+          Description: this.Description.value,
+          ImageUrl: this.image[0],
+          Tags: this.Tags.value,
         };
         // const dataUpdated = this.blogService.editBlogData(data);
-        const dataUpdated = this.blogRxjs.editBlogData(data);
-        if (dataUpdated) {
-          this.toaster.success(BlogStaticMessage.BlogUpdated);
-        }
+        // const dataUpdated = this.blogRxjs.editBlogData(data);
+        // if (dataUpdated) {
+        //   this.toaster.success(BlogStaticMessage.BlogUpdated);
+        // }
+
+        this.blogService.addUpdateBlogData(data).subscribe({
+          next: (res) => {
+            if (res.statusCode == 200) {
+              this.router.navigate(['']);
+              this.toaster.success(res.message);
+            } else {
+              this.toaster.error(res.message);
+            }
+          },
+          error: (res) => {
+            console.log(res);
+          },
+        });
       } else {
-        const tagsToBeAdd: string[] = this.Tags.value.map(
-          (element: any) => `'${element}'`
-        );
         const data = {
-          id: 0,
-          title: this.Title.value,
-          description: this.Description.value,
-          imgSource: this.image[0],
-          tags: tagsToBeAdd.toString(),
+          Id: 0,
+          Title: this.Title.value,
+          Description: this.Description.value,
+          ImageUrl: this.image[0],
+          Tags: this.Tags.value,
         };
-        const blogAdded = this.blogRxjs.addNewBlogData(data);
+        // const blogAdded = this.blogRxjs.addNewBlogData(data);
         // const blogAdded = this.blogService.addNewBlogData(data);
-        if (blogAdded) {
-          this.toaster.success(BlogStaticMessage.BlogAdded);
-        }
+        this.blogService.addUpdateBlogData(data).subscribe({
+          next: (res) => {
+            if (res.statusCode == 200) {
+              this.router.navigate(['']);
+              this.toaster.success(res.message);
+            } else {
+              this.toaster.error(res.message);
+            }
+          },
+          error: (res) => {
+            console.log(res);
+          },
+        });
       }
 
-      this.router.navigate(['']);
       //console.log('DATA HERE');
     } else {
       this.toaster.error(BlogStaticMessage.FillAllDetailsError);
