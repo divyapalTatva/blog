@@ -19,7 +19,9 @@ export class BlogApiService {
   }
 
   //get blog data from its id
-  getBlogDataById(id: number) {}
+  getBlogDataById(id: number) {
+    return this.http.get(`${environment.baseURL}Blog/GetBlogById?id=${id}`);
+  }
 
   //add new blog
   addUpdateBlogData(BlogData: any) {

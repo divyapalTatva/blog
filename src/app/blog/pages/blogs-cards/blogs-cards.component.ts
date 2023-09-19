@@ -46,22 +46,12 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
     private authService: AuthService
   ) {}
   blogData: any;
-  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
-  //   this.blogService.getCardData()
-  // );
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   ngOnInit(): void {
-    // this.blogRxjs.blogData.subscribe((res) => {
-    //   this.blogData = res;
-    // });
-
     this.getBlogData();
-    console.log('Observable blog Cards', this.blogData);
-    // debounce function use for searching after some time
     this.searchInputValue.pipe(debounceTime(500)).subscribe((value) => {
       this.blogService.getCardData(value).subscribe((res: any) => {
         this.blogData = res.data;
-        console.log(res);
         this.dataSource = new MatTableDataSource<any>(res.data);
         this.cardObservableData = this.dataSource.connect();
         setTimeout(() => {
@@ -86,7 +76,6 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
   getBlogData() {
     this.blogService.getCardData('').subscribe((res: any) => {
       this.blogData = res.data;
-      console.log(res);
       this.dataSource = new MatTableDataSource<any>(res.data);
       this.cardObservableData = this.dataSource.connect();
 

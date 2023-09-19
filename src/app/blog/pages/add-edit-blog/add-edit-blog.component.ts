@@ -69,25 +69,23 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe((res) => {
       if (res['id']) {
         this.isDataForEdit = true;
-        this.blogData = this.blogRxjs.getBlogDataById(+res['id']);
-        console.log(this.blogData);
-
-        this.tagsData = this.blogData['tags']
-          .split(',')
-          .map((element: any, index: any) => {
-            return element.replace(/'/g, '').trim();
-          });
-        this.BlogForm.patchValue({
-          title: this.blogData.title,
-          description: this.blogData.description,
-          tags: this.tagsData,
+        this.blogService.getBlogDataById(+res['id']).subscribe({
+          next: (res: any) => {
+            this.blogData = res.data[0];
+            this.BlogForm.patchValue({
+              title: this.blogData.title,
+              description: this.blogData.description,
+              tags: this.blogData.tags,
+            });
+            const abc = this.image.push(this.blogData.imageUrl);
+            if (abc === 1) {
+              this.imageArrayDataExist = true;
+            } else {
+              this.imageArrayDataExist = false;
+            }
+          },
+          error: (res) => {},
         });
-        const abc = this.image.push(this.blogData.imgSource);
-        if (abc === 1) {
-          this.imageArrayDataExist = true;
-        } else {
-          this.imageArrayDataExist = false;
-        }
       } else {
         this.isDataForEdit = false;
       }
@@ -177,16 +175,9 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     } else {
       this.addUpdate();
     }
-
-    // this.authService.authorize('User@123').subscribe((data) => {
-    //   console.log(data);
-    // });
-    //
   }
 
   addUpdate() {
-    console.log(this.BlogForm.get('tags')?.value);
-
     if (this.isDataForEdit) {
       if (this.image.length > 0) {
         this.imageArrayDataExist = true;
@@ -210,12 +201,6 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           ImageUrl: this.image[0],
           Tags: this.Tags.value,
         };
-        // const dataUpdated = this.blogService.editBlogData(data);
-        // const dataUpdated = this.blogRxjs.editBlogData(data);
-        // if (dataUpdated) {
-        //   this.toaster.success(BlogStaticMessage.BlogUpdated);
-        // }
-
         this.blogService.addUpdateBlogData(data).subscribe({
           next: (res) => {
             if (res.statusCode == 200) {
@@ -237,8 +222,6 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
           ImageUrl: this.image[0],
           Tags: this.Tags.value,
         };
-        // const blogAdded = this.blogRxjs.addNewBlogData(data);
-        // const blogAdded = this.blogService.addNewBlogData(data);
         this.blogService.addUpdateBlogData(data).subscribe({
           next: (res) => {
             if (res.statusCode == 200) {
