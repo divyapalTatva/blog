@@ -118,14 +118,14 @@ export class BlogsCardsComponent implements OnInit, AfterViewInit {
           this.blogService.deleteBlog(id).subscribe({
             next: (res) => {
               if (res.statusCode == 200) {
+                this.dataSource.data = this.dataSource.data.filter((data) => {
+                  return data.id == id ? false : true;
+                });
+                this.dataSource._updateChangeSubscription();
                 this.toaster.success(res.message);
-                this.getBlogData();
               } else {
                 this.toaster.error(res.message);
               }
-            },
-            error: (res) => {
-              this.toaster.error(BlogStaticMessage.SomethingWentWrong);
             },
           });
         } else {

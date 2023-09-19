@@ -47,6 +47,7 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
   isDataForEdit!: boolean;
   dropdownData = TagsDropdown;
   tagsData: string[] = [];
+  data: any;
 
   IMG_ACCEPTABLE_EXTENSIONS: string = 'image/png|image/jpeg|image/jpg';
   constructor(
@@ -194,50 +195,32 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
     if (!this.BlogForm.invalid && this.imageArrayDataExist) {
       if (this.isDataForEdit) {
-        const data = {
+        this.data = {
           Id: this.blogData.id,
           Title: this.Title.value,
           Description: this.Description.value,
           ImageUrl: this.image[0],
           Tags: this.Tags.value,
         };
-        this.blogService.addUpdateBlogData(data).subscribe({
-          next: (res) => {
-            if (res.statusCode == 200) {
-              this.router.navigate(['']);
-              this.toaster.success(res.message);
-            } else {
-              this.toaster.error(res.message);
-            }
-          },
-          error: (res) => {
-            console.log(res);
-          },
-        });
       } else {
-        const data = {
+        this.data = {
           Id: 0,
           Title: this.Title.value,
           Description: this.Description.value,
           ImageUrl: this.image[0],
           Tags: this.Tags.value,
         };
-        this.blogService.addUpdateBlogData(data).subscribe({
-          next: (res) => {
-            if (res.statusCode == 200) {
-              this.router.navigate(['']);
-              this.toaster.success(res.message);
-            } else {
-              this.toaster.error(res.message);
-            }
-          },
-          error: (res) => {
-            console.log(res);
-          },
-        });
       }
-
-      //console.log('DATA HERE');
+      this.blogService.addUpdateBlogData(this.data).subscribe({
+        next: (res) => {
+          if (res.statusCode == 200) {
+            this.router.navigate(['']);
+            this.toaster.success(res.message);
+          } else {
+            this.toaster.error(res.message);
+          }
+        },
+      });
     } else {
       this.toaster.error(BlogStaticMessage.FillAllDetailsError);
     }

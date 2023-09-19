@@ -4,6 +4,7 @@ export const BlogStaticMessage = {
   BlogDeleted: 'Blog has been deleted successfully',
   BlogDeleteConfirmation: 'Are you sure want to delete blog?',
   SomethingWentWrong: 'Oops something went wrong please try again!!',
+  InternalServerError: 'Oops something went wrong please try after sometime!!',
   NoBlogDeleted: 'No blog has been deleted!!',
   ImageFileSizeError: 'please enter file size that must be less than 400kb',
   ImageValidExtensionError: 'please enter valid file!!',
