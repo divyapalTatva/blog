@@ -11,11 +11,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
 import { BlogCardService } from '../../service/blog-local/blog-card.service';
-
 import { ToastrService } from 'ngx-toastr';
 import { options } from 'src/app/blog/shared/static/editorToolbarOptions';
 import { BlogStaticMessage } from 'src/app/blog/shared/static/blogResponseMessage';
@@ -160,7 +157,7 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
   //function for add update new blog
   AddUpdateBlog() {
-    console.log(this.authService.getToken());
+    // console.log(this.authService.getToken());
 
     if (this.authService.getToken() == null) {
       this.confirmBox
