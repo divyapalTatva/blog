@@ -14,11 +14,18 @@ import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
+  navLink: string = this.router.url;
   constructor(
     private toaster: ToastrService,
     private confirmBox: ConfirmBoxService,
     private router: Router
-  ) {}
+  ) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.navLink = event.url;
+      });
+  }
 
   intercept(
     request: HttpRequest<unknown>,
@@ -40,17 +47,19 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
           console.log(errorMsg);
           this.toaster.error(BlogStaticMessage.InternalServerError);
         }
-        this.confirmBox
-          .openAuthDialogue(BlogStaticMessage.PleaseEnterCredentials)
-          .afterClosed()
-          .subscribe((res) => {
-            if (res) {
-              this.toaster.success('login done successfully');
-              window.location.reload();
-            } else {
-              this.toaster.error(BlogStaticMessage.SomethingWentWrong);
-            }
-          });
+        if (this.navLink != '/') {
+          this.confirmBox
+            .openAuthDialogue(BlogStaticMessage.PleaseEnterCredentials)
+            .afterClosed()
+            .subscribe((res) => {
+              if (res) {
+                this.toaster.success('login done successfully');
+                window.location.reload();
+              } else {
+                this.toaster.error(BlogStaticMessage.SomethingWentWrong);
+              }
+            });
+        }
         return throwError(errorMsg);
       })
     );

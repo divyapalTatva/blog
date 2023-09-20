@@ -20,7 +20,7 @@ import { ErrorHandlingInterceptor } from './blog/shared/interceptors/api-error-h
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({ timeOut: 2000 }),
+    ToastrModule.forRoot({ timeOut: 2000, preventDuplicates: true }),
     HttpClientModule,
     MaterialModule,
   ],

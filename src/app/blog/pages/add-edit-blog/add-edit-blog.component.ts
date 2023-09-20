@@ -229,7 +229,9 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
   addNewTag() {
     const tagDataToBeAdd = this.BlogForm.get('tagsToBeAdd')?.value;
     TagsDropdown.push(tagDataToBeAdd);
-    this.BlogForm.patchValue({ tagsToBeAdd: '' });
+    const tagValues = this.Tags.value;
+    tagValues.push(tagDataToBeAdd);
+    this.BlogForm.patchValue({ tagsToBeAdd: '', tags: tagValues });
   }
 
   // functions for get error of all input fields

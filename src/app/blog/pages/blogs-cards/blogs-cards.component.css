@@ -99,6 +99,8 @@ mat-card-actions > button {
 }
 mat-card-content {
   min-height: 60px;
+  max-height: 60px;
+  overflow: hidden;
   margin-top: 0.5rem;
 }
 .add-button {

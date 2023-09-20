@@ -20,3 +20,6 @@ body {
   width: max-content !important;
   height: max-content;
 }
+.mat-mdc-card-header-text {
+  max-width: 100% !important;
+}
