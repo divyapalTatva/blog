@@ -29,7 +29,7 @@ export class BlogDetailComponent implements OnInit {
     this.blogData = this.blogService.getBlogDataById(this.blogId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
-          this.blogData = res.data[0];
+          this.blogData = res.data;
         } else {
           this.route.navigate(['']);
         }

@@ -42,7 +42,7 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
   toolbarOptions: any = options;
   blogData: any;
   isDataForEdit!: boolean;
-  dropdownData = TagsDropdown;
+  dropdownData: any;
   tagsData: string[] = [];
   data: any;
 
@@ -61,6 +61,7 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.getAllTags();
   }
 
   ngAfterViewInit(): void {
@@ -69,20 +70,21 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
         this.isDataForEdit = true;
         this.blogService.getBlogDataById(+res['id']).subscribe({
           next: (res: any) => {
-            this.blogData = res.data[0];
+            const tags = res.data['tags'];
+            this.blogData = res.data;
+            const tagIds = tags.map((tag: any) => tag.tagId);
             this.BlogForm.patchValue({
-              title: this.blogData.title,
-              description: this.blogData.description,
-              tags: this.blogData.tags,
+              title: res.data.title,
+              description: res.data.description,
+              tags: tagIds,
             });
-            const abc = this.image.push(this.blogData.imageUrl);
+            const abc = this.image.push(res.data.imageUrl);
             if (abc === 1) {
               this.imageArrayDataExist = true;
             } else {
               this.imageArrayDataExist = false;
             }
           },
-          error: (res) => {},
         });
       } else {
         this.isDataForEdit = false;
@@ -102,6 +104,13 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getAllTags() {
+    this.blogService.getAllTags().subscribe({
+      next: (res) => {
+        this.dropdownData = res.data;
+      },
+    });
+  }
   // ckeditor configuration on ready function
   onReady(editor: ClassicEditor): void {
     const element = editor.ui.getEditableElement()!;
@@ -224,10 +233,31 @@ export class AddEditBlogComponent implements OnInit, AfterViewInit {
   }
 
   addNewTag() {
+    if (this.authService.getToken() == null) {
+      this.confirmBox
+        .openAuthDialogue(BlogStaticMessage.PleaseEnterCredentials)
+        .afterClosed()
+        .subscribe((res) => {
+          if (res) {
+            this.addTagfun();
+          } else {
+            this.toaster.error(BlogStaticMessage.SomethingWentWrong);
+          }
+        });
+    } else {
+      this.addTagfun();
+    }
+  }
+
+  addTagfun() {
     const tagDataToBeAdd = this.BlogForm.get('tagsToBeAdd')?.value;
-    TagsDropdown.push(tagDataToBeAdd);
     const tagValues = this.Tags.value;
-    tagValues.push(tagDataToBeAdd);
+    this.blogService.addNewTags(tagDataToBeAdd).subscribe({
+      next: (res) => {
+        this.dropdownData.push(res.data);
+        tagValues.push(res.data.tagId);
+      },
+    });
     this.BlogForm.patchValue({ tagsToBeAdd: '', tags: tagValues });
   }
 

@@ -22,9 +22,11 @@
               <mat-label>Tags</mat-label>
 
               <mat-select formControlName="tags" multiple>
-                <mat-option *ngFor="let tag of dropdownData" [value]="tag">{{
-                  tag
-                }}</mat-option>
+                <mat-option
+                  *ngFor="let tag of dropdownData"
+                  [value]="tag.tagId"
+                  >{{ tag.tagName }}</mat-option
+                >
               </mat-select>
               <mat-error>{{ getTagsError() }}</mat-error>
             </mat-form-field>

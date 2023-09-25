@@ -37,4 +37,15 @@ export class BlogApiService {
       `${environment.baseURL}Blog/DeleteBlogData?id=${id}`
     );
   }
+
+  getAllTags() {
+    return this.http.get<any>(`${environment.baseURL}Blog/GetAllTags`);
+  }
+
+  addNewTags(tagToBeAdded: string) {
+    const payload = {
+      tagName: tagToBeAdded,
+    };
+    return this.http.put<any>(`${environment.baseURL}Blog/AddNewTag`, payload);
+  }
 }
